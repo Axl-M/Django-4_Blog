@@ -5,14 +5,15 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Post(models.Model):
+    """ модель постов блога """
     class Status(models.TextChoices):
         DRAFT = 'DF', 'Draft'
         PUBLISHED = 'PB', 'Published'
 
     title = models.CharField(max_length=250)
-    slug = models.SlugField(max_length=250)
+    slug = models.SlugField(max_length=250)     # SlugField по умолчанию подразумевают индекс
     # many-to-one relationship (several posts can be writen by one author/user)
-    author = models.ForeignKey(User,
+    author = models.ForeignKey(User,               # поля типа ForeignKey по умолчанию подразумевают индекс
                                on_delete=models.CASCADE,    # on delete User - delete all his posts
                                related_name='blog_posts')   # имя обратной связи, от User к Post (user.blog_posts)
     body = models.TextField()
